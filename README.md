@@ -1,70 +1,83 @@
-# Getting Started with Create React App
+# React Context API Learning Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a simple application built to demonstrate the usage of the Context API in React. The Context API provides a way to manage and share state across multiple components without the need for prop drilling.
 
-## Available Scripts
+## Project Structure
 
-In the project directory, you can run:
+The project consists of two main files:
 
-### `npm start`
+1. `App.js`: This file serves as the entry point of the application and contains the main component.
+2. `PostContext.js`: This file defines the `PostContext` and provides the `PostProvider` component and the `usePosts` custom hook.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Generating random posts: The application generates an array of random posts using the `faker` library. Each post consists of a title and a body.
+- Searching posts: The application allows users to search for posts based on the entered search query. The search is performed by filtering the posts based on the title and body.
+- Adding and clearing posts: Users can add new posts to the list or clear all the posts using the provided functions.
 
-### `npm test`
+## Usage
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Wrap the components that need access to the post data with the `PostProvider` component. This will provide the necessary context to the child components.
+2. Use the `usePosts` custom hook in any component that requires access to the post data or the related functions. This hook returns an object containing the following properties:
+   - `posts`: An array of searched posts based on the current search query.
+   - `onAddPost`: A function to add a new post to the list.
+   - `onClearPosts`: A function to clear all the posts.
+   - `searchQuery`: The current search query string.
+   - `setSearchQuery`: A function to update the search query.
 
-### `npm run build`
+## Example
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Here's an example of how to use the `PostProvider` and `usePosts` in a component:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```jsx
+import { PostProvider, usePosts } from "./PostContext";
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+function App() {
+  return (
+    <PostProvider>
+      <div>
+        <SearchBar />
+        <PostList />
+        <AddPostForm />
+        <ClearPostsButton />
+      </div>
+    </PostProvider>
+  );
+}
 
-### `npm run eject`
+function SearchBar() {
+  const { searchQuery, setSearchQuery } = usePosts();
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  return (
+    <input
+      type="text"
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      placeholder="Search posts..."
+    />
+  );
+}
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+function PostList() {
+  const { posts } = usePosts();
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  return (
+    <ul>
+      {posts.map((post, index) => (
+        <li key={index}>
+          <h3>{post.title}</h3>
+          <p>{post.body}</p>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+// ... other component implementations ...
+```
 
-## Learn More
+In this example, the `App` component wraps its child components with the `PostProvider`. The `SearchBar` component uses the `usePosts` hook to access the `searchQuery` and `setSearchQuery` functions, while the `PostList` component uses the hook to access the `posts` array.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Conclusion
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project demonstrates the basic usage of the Context API in React to manage and share state across components. By utilizing the `PostContext` and the `usePosts` custom hook, you can easily access and manipulate the post data in any component that needs it, without the need for prop drilling.
