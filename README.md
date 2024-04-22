@@ -1,6 +1,7 @@
-# React Context API Learning Project
+# Atomic-Blog
 
-This project is a simple application built to demonstrate the usage of the Context API in React. The Context API provides a way to manage and share state across multiple components without the need for prop drilling.
+This project is a simple application built to demonstrate the usage of the Context API in React.
+![project_preview](image.png)
 
 ## Project Structure
 
