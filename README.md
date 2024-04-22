@@ -82,3 +82,8 @@ In this example, the `App` component wraps its child components with the `PostPr
 ## Conclusion
 
 This project demonstrates the basic usage of the Context API in React to manage and share state across components. By utilizing the `PostContext` and the `usePosts` custom hook, you can easily access and manipulate the post data in any component that needs it, without the need for prop drilling.
+
+## Acknowledgements
+
+- This project is based on a project from JONAS SCHMEDTMANN's "The Ultimate React Course". The course provided the foundation and guidance for building this app.
+- [Faker API](https://fakerjs.dev/) for generate fake data for testing and development.
